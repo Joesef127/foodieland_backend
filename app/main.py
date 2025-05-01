@@ -4,10 +4,8 @@ from . import models, database
 from .routes import recipe
 
 
-# Initialize the FastAPI app
 app = FastAPI()
 
-# Allow CORS for all origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -17,11 +15,6 @@ app.add_middleware(
 )
 
 models.Base.metadata.create_all(bind=database.engine)
-# Include the database dependency
-@app.get("/")
-async def root():
-    return {"message": "Welcome to the Recipe API!"}
 
-# Include the recipe router
 app.include_router(recipe.router)
 

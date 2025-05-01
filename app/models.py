@@ -1,11 +1,11 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean
 from .database import Base
 
 class Recipe(Base):
     __tablename__= "recipes"
-    id = Column(int, primary_key=True, index=True)
-    title = Column(str, index=True)
-    time = Column(int)
-    type = Column(str)
-    image = Column(str)
-    isFavourite = Column(bool)
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    time = Column(Integer)
+    category = Column(String)
+    image = Column(String)
+    isFavorite = Column(Boolean, default=False)

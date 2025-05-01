@@ -3,7 +3,7 @@ from pydantic import BaseModel
 class Recipe(BaseModel):
     name: str
     time: int
-    type: str
+    category: str
     image: str
     isFavorite: bool
 
