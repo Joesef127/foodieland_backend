@@ -20,15 +20,15 @@ async def get_recipe(recipe_id: int, db: Session = Depends(get_db)):
     return recipe
 
 @router.post("/", response_model=schemas.Recipe)
-async def create_recipe(recipe: schemas.CreateRecipe, db: Session = Depends(get_db)):
-    db_recipe = models.Recipe(**recipe.model_dump())
+async def create_recipe(recipe: schemas.Recipe, db: Session = Depends(get_db)):
+    db_recipe = models.Recipe(**recipe.model_dump(exclude={"id"}))
     db.add(db_recipe)
     db.commit()
     db.refresh(db_recipe)
     return db_recipe
 
 @router.put("/{recipe_id}", response_model=schemas.Recipe)
-async def update_recipe(recipe_id: int, recipe: schemas.CreateRecipe, db: Session = Depends(get_db)):
+async def update_recipe(recipe_id: int, recipe: schemas.Recipe, db: Session = Depends(get_db)):
     db_recipe = db.query(models.Recipe).filter(models.Recipe.id == recipe_id).first()
     if not db_recipe:
         raise HTTPException(status_code=404, detail="Recipe not found")
@@ -45,5 +45,15 @@ async def delete_recipe(recipe_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Recipe not found")
     db.delete(db_recipe)
     db.commit()
+    return db_recipe
+
+@router.patch("/{recipe_id}/toggle_favorite", response_model=schemas.Recipe)
+async def toggle_favorite(recipe_id: int, db: Session = Depends(get_db)):
+    db_recipe = db.query(models.Recipe).filter(models.Recipe.id == recipe_id).first()
+    if not db_recipe:
+        raise HTTPException(status_code=404, detail="Recipe not found")
+    db_recipe.isFavorite = not db_recipe.isFavorite
+    db.commit()
+    db.refresh(db_recipe)
     return db_recipe
 
