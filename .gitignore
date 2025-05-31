@@ -1,0 +1,12 @@
+.vercel
+sqlite_dump.sql
+app/__pycache__/database.cpython-313.pyc
+app/__pycache__/main.cpython-313.pyc
+foodieland_db/foodieland_db.sqlproj
+app/__pycache__/main.cpython-313.pyc
+app/__pycache__/database.cpython-313.pyc
+migrations/script.py.mako
+migrations/env.py
+app/__pycache__/database.cpython-313.pyc
+app/__pycache__/main.cpython-313.pyc
+alembic.ini
