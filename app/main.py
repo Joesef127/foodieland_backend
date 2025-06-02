@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from . import models, database
 from .routes import recipe, blog
+import logging
 
 
 app = FastAPI()
@@ -18,6 +19,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+logging.basicConfig(level=logging.INFO)
+
+@app.middleware("http")
+async def log_requests(request, call_next):
+    try:
+        response = await call_next(request)
+        return response
+    except Exception as e:
+        logging.error(f"Error occurred: {e}")
+        raise e
 
 @app.middleware("http")
 async def add_cors_headers(request, call_next):
