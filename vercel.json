@@ -10,8 +10,5 @@
       "src": "/(.*)",
       "dest": "app/main.py"
     }
-  ],
-  "env": {
-    "DATABASE_URL": "mysql+pymysql://sql8782303:KkPspKhsJv@sql8.freesqldatabase.com:3306/sql8782303"
-  }
+  ]
 }
